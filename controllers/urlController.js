@@ -15,7 +15,7 @@ exports.createShortenUrl = async (req, res) => {
         break;
       }
     }
-    const newDoc = new urlSchema({
+    const newDoc = new urlSchema.create({
       originalurl: url,
       shortcode: shortCode,
       created_at: new Date(),
@@ -27,3 +27,5 @@ exports.createShortenUrl = async (req, res) => {
     console.log(Err);
   }
 };
+
+exports.getOriginalUrl = (req, res) => {};
