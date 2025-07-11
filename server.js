@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const urlRoutes = require("./routes/urlRouter");
 
 dotenv.config();
 
@@ -22,5 +23,7 @@ async function connectDb() {
 }
 
 connectDb();
+
+app.use("/shorten", urlRoutes);
 const port = process.env.PORT || 3000;
 app.listen(port, console.log("server running on my port 3000"));

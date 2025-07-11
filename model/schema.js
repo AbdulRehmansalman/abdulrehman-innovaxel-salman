@@ -12,5 +12,7 @@ const urlschema = new mongoose.Schema({
   },
   created_at: { type: Date, default: Date.now },
   updated_at: { type: Date, default: Date.now },
-  accessCount: { type: Number, deafult: 0 },
+  accessCount: { type: Number, default: 0 },
 });
+
+module.exports = mongoose.model("schema", urlschema);
