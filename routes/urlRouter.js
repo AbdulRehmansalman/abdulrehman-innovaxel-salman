@@ -5,5 +5,6 @@ const validatationUrl = require("../middleware/validatorUrl");
 const router = express.Router();
 
 router.post("/", validatationUrl, urlController.createShortenUrl);
+router.get("/:shortCode", urlController.getOriginalUrl);
 
 module.exports = router;

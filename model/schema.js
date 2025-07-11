@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const urlschema = new mongoose.Schema({
+const urlSchema = new mongoose.Schema({
   originalurl: {
     type: String,
     required: true,
@@ -15,4 +15,4 @@ const urlschema = new mongoose.Schema({
   accessCount: { type: Number, default: 0 },
 });
 
-module.exports = mongoose.model("schema", urlschema);
+module.exports = mongoose.model("schema", urlSchema);

@@ -2,7 +2,7 @@ const shortid = require("shortid");
 const urlSchema = require("../model/schema");
 
 // To Create the Shorten Url
-exports.createShortenUrl = async (req, res) => {
+exports.createShortenUrl = async (req, res, next) => {
   try {
     const { url } = req.body;
     let shortCode;
@@ -15,17 +15,34 @@ exports.createShortenUrl = async (req, res) => {
         break;
       }
     }
-    const newDoc = new urlSchema.create({
+    const newDoc = new urlSchema({
       originalurl: url,
       shortcode: shortCode,
       created_at: new Date(),
       updated_at: new Date(),
     });
-
+    await newDoc.save();
     res.status(201).json(newDoc);
   } catch (Err) {
     console.log(Err);
   }
 };
 
-exports.getOriginalUrl = (req, res) => {};
+exports.getOriginalUrl = async (req, res) => {
+  try {
+    const { shortCode } = req.params;
+    const url = await urlSchema.findOneAndUpdate(
+      { shortcode: shortCode },
+      { $inc: { accessCount: 1 } },
+      { new: true }
+    );
+    console.log(url);
+
+    if (!url) {
+      return res.status(400).json({ error: "Url not FOund" });
+    }
+    res.status(200).json({ originalurl: url.originalurl });
+  } catch (Err) {
+    console.log(Err);
+  }
+};
