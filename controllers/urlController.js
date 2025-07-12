@@ -76,3 +76,13 @@ exports.deleteShortUrl = async (req, res) => {
   }
   res.status(204).send();
 };
+
+exports.getShortUrlStats = async (req, res) => {
+  const { shortCode } = req.params;
+  const statsUrl = await urlSchema.findOne({ shortcode: shortCode });
+
+  if (!statsUrl) {
+    return res.status(404).json({ error: "not Found short Url" });
+  }
+  res.status(200).json(statsUrl);
+};
