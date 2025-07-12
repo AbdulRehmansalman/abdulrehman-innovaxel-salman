@@ -18,8 +18,12 @@ module.exports = (req, res, next) => {
   if (!trimUrl) {
     return res.status(400).json({ error: "It cannot be Empty" });
   }
+  // it is for not entering malicious urls
+  if (trimUrl.includes("@") || trimUrl.includes("..")) {
+    return res.status(400).json({ error: "Invalid URL format" });
+  }
 
-  // then check that the Url is valid as it as secure protocols
+  // then check that the Url is valid as it has secure protocols
   if (
     !validator.isURL(trimUrl, {
       protocols: ["http", "https"],

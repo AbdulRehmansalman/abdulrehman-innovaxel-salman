@@ -27,11 +27,11 @@ connectDb();
 app.use("/shorten", urlRoutes);
 
 // For testing Purposes
-const urlSchema = require("./model/schema");
+// const urlSchema = require("./model/schema");
 
-urlSchema
-  .find()
-  .then((data) => console.log("Stored Documents:", data))
-  .catch((err) => console.error("Error fetching documents:", err));
+// urlSchema
+//   .find()
+//   .then((data) => console.log("Stored Documents:", data))
+//   .catch((err) => console.error("Error fetching documents:", err));
 const port = process.env.PORT || 3000;
 app.listen(port, console.log("server running on my port 3000"));

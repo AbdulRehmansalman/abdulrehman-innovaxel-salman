@@ -23,9 +23,10 @@ exports.createShortenUrl = async (req, res, next) => {
       updated_at: new Date(),
     });
     await newDoc.save();
-    res.status(201).json(newDoc);
+    return res.status(201).json(newDoc);
   } catch (Err) {
     console.error(Err);
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -42,16 +43,17 @@ exports.getOriginalUrl = async (req, res) => {
     if (!url) {
       return res.status(404).json({ error: "Short Url not FOund" });
     }
-    res.status(200).json({
+    return sres.status(200).json({
       id: url._id,
       originalurl: url.originalurl,
-      shortcode: url.shortCode,
+      shortcode: url.shortcode,
       created_at: url.created_at,
-      updated_at_at: url.updated_at,
+      updated_at: url.updated_at,
       accessCount: url.accessCount,
     });
   } catch (Err) {
     console.log(Err);
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -67,30 +69,43 @@ exports.updateShortUrl = async (req, res, next) => {
     // console.log("th eUPdaetd Url is", updatedUrl); testing the updatedUrl has come or not
 
     if (!updatedUrl) {
-      res.status(404).json({ error: "Short url not Found" });
+      return res.status(404).json({ error: "Short url not Found" });
     }
-    res.status(200).json(updatedUrl);
+    return res.status(200).json(updatedUrl);
   } catch (Err) {
     console.log(Err);
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 
 exports.deleteShortUrl = async (req, res) => {
-  const { shortCode } = req.params;
-  const deleteUrl = await urlSchema.findOneAndDelete({ shortcode: shortCode });
+  try {
+    const { shortCode } = req.params;
+    const deleteUrl = await urlSchema.findOneAndDelete({
+      shortcode: shortCode,
+    });
 
-  if (!deleteUrl) {
-    return res.status(404).json({ error: "not Found short Url" });
+    if (!deleteUrl) {
+      return res.status(404).json({ error: "not Found short Url" });
+    }
+    return res.status(204).send();
+  } catch (Err) {
+    console.log(Err);
+    return res.status(500).json({ error: "Internal server error" });
   }
-  res.status(204).send();
 };
 
 exports.getShortUrlStats = async (req, res) => {
-  const { shortCode } = req.params;
-  const statsUrl = await urlSchema.findOne({ shortcode: shortCode });
+  try {
+    const { shortCode } = req.params;
+    const statsUrl = await urlSchema.findOne({ shortcode: shortCode });
 
-  if (!statsUrl) {
-    return res.status(404).json({ error: "not Found short Url" });
+    if (!statsUrl) {
+      return res.status(404).json({ error: "not Found short Url" });
+    }
+    return res.status(200).json(statsUrl);
+  } catch (Err) {
+    console.log(Err);
+    return res.status(500).json({ error: "Internal server error" });
   }
-  res.status(200).json(statsUrl);
 };
