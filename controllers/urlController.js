@@ -4,7 +4,8 @@ const urlSchema = require("../model/schema");
 // To Create the Shorten Url
 exports.createShortenUrl = async (req, res, next) => {
   try {
-    const { url } = req.body;
+    // as i have optimized the middleware validation so the url goes to middleware and then we use that from middleware
+    const { validatedUrl } = req;
     let shortCode;
 
     while (true) {
@@ -16,7 +17,7 @@ exports.createShortenUrl = async (req, res, next) => {
       }
     }
     const newDoc = new urlSchema({
-      originalurl: url,
+      originalurl: validatedUrl,
       shortcode: shortCode,
       created_at: new Date(),
       updated_at: new Date(),
@@ -24,7 +25,7 @@ exports.createShortenUrl = async (req, res, next) => {
     await newDoc.save();
     res.status(201).json(newDoc);
   } catch (Err) {
-    console.log(Err);
+    console.error(Err);
   }
 };
 
@@ -39,9 +40,16 @@ exports.getOriginalUrl = async (req, res) => {
     console.log(url);
 
     if (!url) {
-      return res.status(400).json({ error: "Url not FOund" });
+      return res.status(404).json({ error: "Short Url not FOund" });
     }
-    res.status(200).json({ originalurl: url.originalurl });
+    res.status(200).json({
+      id: url._id,
+      originalurl: url.originalurl,
+      shortcode: url.shortCode,
+      created_at: url.created_at,
+      updated_at_at: url.updated_at,
+      accessCount: url.accessCount,
+    });
   } catch (Err) {
     console.log(Err);
   }
@@ -50,16 +58,16 @@ exports.getOriginalUrl = async (req, res) => {
 exports.updateShortUrl = async (req, res, next) => {
   try {
     const { shortCode } = req.params;
-    const { url } = req.body;
+    const { validatedUrl } = req;
     const updatedUrl = await urlSchema.findOneAndUpdate(
       { shortcode: shortCode },
-      { originalurl: url, updated_at: new Date() },
+      { originalurl: validatedUrl, updated_at: new Date() },
       { new: true }
     );
     // console.log("th eUPdaetd Url is", updatedUrl); testing the updatedUrl has come or not
 
     if (!updatedUrl) {
-      res.status(400).json({ error: "url not Found" });
+      res.status(404).json({ error: "Short url not Found" });
     }
     res.status(200).json(updatedUrl);
   } catch (Err) {

@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
     return res.status(400).json({ error: "url required" });
   }
 
-  // and check its dtatype as String
+  // and check its datatype as String
   if (typeof url !== "string") {
     return res.status(400).json({ error: "url is in strings" });
   }
@@ -31,6 +31,6 @@ module.exports = (req, res, next) => {
       .status(400)
       .json({ error: "it is invalid and has http or https" });
   }
-
+  req.validatedUrl = trimUrl;
   next();
 };
