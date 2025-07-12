@@ -46,3 +46,23 @@ exports.getOriginalUrl = async (req, res) => {
     console.log(Err);
   }
 };
+
+exports.updateShortUrl = async (req, res, next) => {
+  try {
+    const { shortCode } = req.params;
+    const { url } = req.body;
+    const updatedUrl = await urlSchema.findOneAndUpdate(
+      { shortcode: shortCode },
+      { originalurl: url, updated_at: new Date() },
+      { new: true }
+    );
+    // console.log("th eUPdaetd Url is", updatedUrl); testing the updatedUrl has come or not
+
+    if (!updatedUrl) {
+      res.status(400).json({ error: "url not Found" });
+    }
+    res.status(200).json(updatedUrl);
+  } catch (Err) {
+    console.log(Err);
+  }
+};

@@ -6,5 +6,6 @@ const router = express.Router();
 
 router.post("/", validatationUrl, urlController.createShortenUrl);
 router.get("/:shortCode", urlController.getOriginalUrl);
+router.put("/:shortCode", validatationUrl, urlController.updateShortUrl);
 
 module.exports = router;
