@@ -31,12 +31,6 @@ sudo apt update
 sudo apt install -y mongodb-org
 sudo systemctl start mongod
 
-# Initialize Database
-mongosh
-> use urlshortener
-> db.createCollection('urls')
-> exit
-
 # Start Backend
 cd backend
 npm install
