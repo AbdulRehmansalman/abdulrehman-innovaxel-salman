@@ -1,8 +1,6 @@
 # 🔗 URL Shortener - SnapLink
 
-![URL Shortener Demo](https://example.com/demo.gif) *Replace with actual demo GIF*
-
-## 🛠️ Tech Stack
+## Tech Stack
 | Component       | Technology         |
 |-----------------|--------------------|
 | **Backend**     | Node.js + Express  |
@@ -43,30 +41,30 @@ mongosh
 cd backend
 npm install
 echo "MONGODB_URI=mongodb://localhost:27017/urlshortener" > .env
-echo "PORT=3000" >> .env
+echo "PORT=3000"  // create .env in out project and add these
 npm start
-✅ Backend Running: http://localhost:3000
+Backend Running: http://localhost:3000
 
 2️⃣ Frontend Setup
 bash
 cd frontend
 npm install
 npm run dev
-🌐 Access UI: http://localhost:5173
+Access UI: http://localhost:5173
 
-📡 API Endpoints
+API Endpoints
 Endpoint	Method	Description	Example
 /shorten	POST	Create short URL	{ "url": "https://example.com" }
-/:code	GET	Redirect to original URL (301)	/abc123 → Redirects
+/:code	GET	Redirect to original URL 	/abc123 → give to original Url
 /:code	PUT	Update destination URL	{ "url": "https://new-url.com" }
-/:code	DELETE	Remove short URL	-
+/:code	DELETE	Remove short URL	- on the basis of shortCode
 /:code/stats	GET	Get access statistics	Returns clicks, timestamps
-🗃️ Database Operations
+ Database Operations
 bash
 # Access MongoDB Shell
-mongosh urlshortener
+mongosh
+use urlshortener
 
 # Common Commands
 > db.urls.find()           # View all URLs
 > db.urls.countDocuments() # Count entries
-> db.urls.drop()           # Reset collection
