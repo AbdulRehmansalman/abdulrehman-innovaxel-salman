@@ -12,9 +12,6 @@
   animation: fadeIn 0.3s ease-out;
 }
 
-/* Custom styles */
 body {
   font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
 }
-
-/* Tailwind will handle most styles */
