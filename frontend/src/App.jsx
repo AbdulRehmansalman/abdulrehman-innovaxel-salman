@@ -11,6 +11,7 @@ import StatsDisplay from "@/components/StatsDisplay";
 
 const API_BASE_URL = "http://localhost:3000/shorten";
 
+// main code here
 const App = () => {
   const [createdUrls, setCreatedUrls] = useState([]);
   const [stats, setStats] = useState(null);
@@ -85,7 +86,7 @@ const App = () => {
   return (
     <div className="min-h-screen bg-grey-200 flex flex-col items-center justify-center gap-10 py-10 px-4">
       <h1 className="text-4xl font-bold text-center text-black">
-        🔗 URL Shortener
+        URL Shortener
       </h1>
       <CreateUrlForm onSubmit={handleCreate} disabled={loading} />
       {createdUrls.length > 0 && (

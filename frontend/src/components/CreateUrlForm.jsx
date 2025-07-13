@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Link, Sparkles } from "lucide-react";
 
+// the component is used for making a card For Entering a long url
 const CreateUrlForm = ({ onSubmit, disabled }) => {
   const [url, setUrl] = useState("");
 

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Trash2 } from "lucide-react";
 
+// as the user types the short Code,it Goes to App.jsx Delete Function Calls
 const DeleteUrlCard = ({ onSubmit, disabled }) => {
   const [shortCode, setShortCode] = useState("");
 

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search, ExternalLink, X } from "lucide-react";
 
+// the component will get the Original Url from entering the Short Code as it gets the input from the user
 const RetrievalUrlCard = ({
   onSubmit,
   disabled,

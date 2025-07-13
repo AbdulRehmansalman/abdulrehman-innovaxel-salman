@@ -6,15 +6,21 @@ exports.createShortenUrl = async (req, res, next) => {
   try {
     // as i have optimized the middleware validation so the url goes to middleware and then we use that from middleware
     const { validatedUrl } = req;
+    let attempt = 0;
+    const maxAttempts = 5;
     let shortCode;
 
-    while (true) {
+    while (attempt < maxAttempts) {
       const genCode = shortid.generate().slice(0, 6);
       const exists = await urlSchema.findOne({ shortcode: genCode });
       if (!exists) {
         shortCode = genCode;
         break;
       }
+      attempt++;
+    }
+    if (!shortCode) {
+      return res.status(500).json({ error: "failed to generate short code" });
     }
     const newDoc = new urlSchema({
       originalurl: validatedUrl,
@@ -43,7 +49,7 @@ exports.getOriginalUrl = async (req, res) => {
     if (!url) {
       return res.status(404).json({ error: "Short Url not FOund" });
     }
-    return sres.status(200).json({
+    return res.status(200).json({
       id: url._id,
       originalurl: url.originalurl,
       shortcode: url.shortcode,

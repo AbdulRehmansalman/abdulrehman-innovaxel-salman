@@ -8,6 +8,7 @@ const UpdateUrlCard = ({ onSubmit, disabled }) => {
   const [shortCode, setShortCode] = useState("");
   const [newUrl, setNewUrl] = useState("");
 
+  // as the user enters the shortCode and enter new Url and passes to the App.jsx UPdate Function and it CHecks(validates) form the backend
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (shortCode.trim() && newUrl.trim()) {

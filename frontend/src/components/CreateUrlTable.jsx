@@ -2,6 +2,8 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ExternalLink } from "lucide-react";
 
+// the component takes the previously generated Url with its Short Code and display in table coming from CreateUrlForm and then
+// by App.jsx and then url goes in array and passed in this component by App.js
 const CreatedUrlsTable = ({ urls, apiBaseUrl }) => {
   return (
     <Card className="backdrop-blur-lg bg-white border border-gray-300 shadow-2xl animate-fade-in">
